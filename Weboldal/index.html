@@ -225,9 +225,10 @@ Gynev VARCHAR(100) PRIMARY KEY
 );
 
 CREATE TABLE Vizsgalat (
-Vid   INT PRIMARY KEY,
+Vid   INT,
 Pid   BIGINT NOT NULL,
-datum DATE NOT NULL PRIMARY KEY,
+datum DATE NOT NULL,
+PRIMARY KEY(Vid,datum),
 CONSTRAINT fk_vizsgalat_paciens
     FOREIGN KEY (Pid) REFERENCES Paciens(Pid)
 );
