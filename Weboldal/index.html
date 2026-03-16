@@ -118,10 +118,10 @@
         <div class="mt-4">
             <div class="card border-primary">
                 <div class="card-header bg-primary text-white">
-                    ER-diagram (vizuális ábrához pl. draw.io használhatuk)
+                    ER-diagram (szövegesen leírva – vizuális ábrához pl. draw.io használható)
                 </div>
                 <div class="card-body small">
-                    <img src="pics/orvosi_er-modell.drawio.png" alt="ER-diagram" style="max-width: 100%; height: auto;">
+                    <img src="pics/orvosi_er-modell.drawio.png" alt="ER-diagram" style="max-width: 100%; height: auto; border: 0.2rem black solid; border-radius: 10%;">
                 </div>
             </div>
         </div>
@@ -149,7 +149,7 @@
                     <td>Paciens</td>
                     <td>Pid, nev, cim, telefon</td>
                     <td>Pid</td>
-                    <td>-</td>
+                    <td>–</td>
                 </tr>
                 <tr>
                     <td>Vizsgalat</td>
@@ -190,7 +190,7 @@
                 </tbody>
             </table>
             <div class="card-body small">
-                <img src="pics/orvosi_er-modell.drawio.png" alt="ER-diagram" style="max-width: 100%; height: auto;">
+                <img src="pics/orvosi_er-modell.drawio.png" alt="ER-diagram" style="max-width: 100%; height: auto; border: 0.2rem black solid; border-radius: 10%;">
             </div>
         </div>
     </div>
@@ -205,61 +205,61 @@
         <div class="code-block mt-3">
 <pre>
 CREATE DATABASE IF NOT EXISTS haziorvosi
-  DEFAULT CHARACTER SET utf8mb4
-  COLLATE utf8mb4_hungarian_ci;
+DEFAULT CHARACTER SET utf8mb4
+COLLATE utf8mb4_hungarian_ci;
 USE haziorvosi;
 
 CREATE TABLE Paciens (
-  Pid   BIGINT PRIMARY KEY,
-  nev   VARCHAR(100) NOT NULL,
-  cim   VARCHAR(200),
-  telefon VARCHAR(50)
+Pid   BIGINT PRIMARY KEY,
+nev   VARCHAR(100) NOT NULL,
+cim   VARCHAR(200),
+telefon VARCHAR(50)
 );
 
 CREATE TABLE Betegseg (
-  Bnev VARCHAR(100) PRIMARY KEY
+Bnev VARCHAR(100) PRIMARY KEY
 );
 
 CREATE TABLE Gyogyszer (
-  Gynev VARCHAR(100) PRIMARY KEY
+Gynev VARCHAR(100) PRIMARY KEY
 );
 
 CREATE TABLE Vizsgalat (
-  Vid   INT PRIMARY KEY,
-  Pid   BIGINT NOT NULL,
-  datum DATE NOT NULL,
-  CONSTRAINT fk_vizsgalat_paciens
+Vid   INT PRIMARY KEY,
+Pid   BIGINT NOT NULL,
+datum DATE NOT NULL,
+CONSTRAINT fk_vizsgalat_paciens
     FOREIGN KEY (Pid) REFERENCES Paciens(Pid)
 );
 
 CREATE TABLE Mit_kap (
-  Bnev VARCHAR(100) NOT NULL,
-  Gynev VARCHAR(100) NOT NULL,
-  PRIMARY KEY (Bnev, Gynev),
-  CONSTRAINT fk_mitkap_betegseg
+Bnev VARCHAR(100) NOT NULL,
+Gynev VARCHAR(100) NOT NULL,
+PRIMARY KEY (Bnev, Gynev),
+CONSTRAINT fk_mitkap_betegseg
     FOREIGN KEY (Bnev) REFERENCES Betegseg(Bnev),
-  CONSTRAINT fk_mitkap_gyogyszer
+CONSTRAINT fk_mitkap_gyogyszer
     FOREIGN KEY (Gynev) REFERENCES Gyogyszer(Gynev)
 );
 
 CREATE TABLE Mire_erzekeny (
-  Pid BIGINT NOT NULL,
-  Gynev VARCHAR(100) NOT NULL,
-  PRIMARY KEY (Pid, Gynev),
-  CONSTRAINT fk_erz_paciens
+Pid BIGINT NOT NULL,
+Gynev VARCHAR(100) NOT NULL,
+PRIMARY KEY (Pid, Gynev),
+CONSTRAINT fk_erz_paciens
     FOREIGN KEY (Pid) REFERENCES Paciens(Pid),
-  CONSTRAINT fk_erz_gyogyszer
+CONSTRAINT fk_erz_gyogyszer
     FOREIGN KEY (Gynev) REFERENCES Gyogyszer(Gynev)
 );
 
 CREATE TABLE Diagnózis (
-  Vid   INT NOT NULL,
-  datum DATE NOT NULL,
-  Bnev  VARCHAR(100) NOT NULL,
-  PRIMARY KEY (Vid, Bnev),
-  CONSTRAINT fk_diag_vizsgalat
+Vid   INT NOT NULL,
+datum DATE NOT NULL,
+Bnev  VARCHAR(100) NOT NULL,
+PRIMARY KEY (Vid, Bnev),
+CONSTRAINT fk_diag_vizsgalat
     FOREIGN KEY (Vid) REFERENCES Vizsgalat(Vid),
-  CONSTRAINT fk_diag_betegseg
+CONSTRAINT fk_diag_betegseg
     FOREIGN KEY (Bnev) REFERENCES Betegseg(Bnev)
 );
 
